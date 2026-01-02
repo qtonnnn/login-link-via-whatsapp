@@ -163,7 +163,7 @@ Sistem ini mengimplementasikan berbagai fitur keamanan:
 ### Rekomendasi Keamanan
 
 1. **Selalu gunakan HTTPS** di production
-2. **定期 rotate** `FONNTE_TOKEN` setiap bulan
+2. **Secara berkala rotate** `FONNTE_TOKEN` setiap bulan
 3. **Monitor log** untuk aktivitas mencurigakan
 4. **Atur `SESSION_LIFETIME`** sesuai kebutuhan (default: 1 jam)
 5. **Validasi IP** untuk lingkungan dengan IP statis
