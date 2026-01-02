@@ -22,6 +22,29 @@ Sistem autentikasi login tanpa password yang menggunakan link login yang dikirim
 | MySQL/MariaDB | 5.7+ | 10.x+ |
 | Ekstensi PHP | mysqli, json, openssl | mysqli, json, openssl, mbstring |
 
+### 📱 WhatsApp API
+
+Sistem ini menggunakan **[Fonnte](https://fonnte.com/)** untuk mengirim link login ke WhatsApp. Anda perlu:
+
+1. Mendaftarkan akun di [Fonnte](https://fonnte.com/)
+2. Mendapatkan API Token dari dashboard
+3. Mengisi `FONNTE_TOKEN` di file `.env`
+
+## ⚠️ Catatan Penting
+
+Sistem ini **hanya dapat berfungsi ketika website sudah online/terhosting**, bukan di localhost. Alasannya:
+
+- **WhatsApp API memerlukan URL yang dapat diakses** - Link login dikirim ke WhatsApp dan harus bisa dibuka dari perangkat pengguna
+- **Session berbasis domain** - Saat pengguna klik link dari WhatsApp, mereka akan diarahkan ke URL yang dikonfigurasi di `APP_URL`
+- **Tidak bisa dicoba di localhost** - Untuk testing, Anda perlu menggunakan tools seperti **ngrok** atau **tunnel** untuk expose localhost ke internet
+
+Jika Anda ingin mencoba di lingkungan development, gunakan **ngrok**:
+```bash
+ngrok http 80
+```
+
+Lalu update `APP_URL` di `.env` dengan URL ngrok Anda.
+
 ## 🚀 Instalasi
 
 ### 1. Clone Repository
