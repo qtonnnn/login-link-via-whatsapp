@@ -1,23 +1,28 @@
-# Login Link via WhatsApp
+# 🔐 Login Link via WhatsApp
 
-Sistem autentikasi login tanpa password yang menggunakan link login yang dikirim melalui WhatsApp.
+Sistem autentikasi login tanpa password yang menggunakan link login yang dikirim melalui WhatsApp. Tidak perlu mengingat password, cukup masukkan nomor WhatsApp dan klik link yang dikirim!
 
-## Fitur
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![PHP](https://img.shields.io/badge/PHP-7.3%2B-777BB4.svg)
 
-- 🔐 **Login Tanpa Password** - Tidak perlu mengingat password
-- 📱 **Autentikasi via WhatsApp** - Link login dikirim ke nomor WhatsApp
-- 🔒 **Keamanan Tinggi** - Token sekali pakai dengan batas waktu
-- ⏱️ **Token Kedaluwarsa** - Link hanya berlaku 5 menit
+## ✨ Fitur
+
+- 🔓 **Tanpa Password** - Tidak perlu mengingat atau mengetik password
+- 📱 **Login via WhatsApp** - Link login dikirim langsung ke WhatsApp Anda
+- ⚡ **Cepat & Mudah** - Hanya 2 klik untuk login
+- 🔒 **Aman** - Token sekali pakai dengan batas waktu
 - 🛡️ **Proteksi Session** - Validasi IP dan user agent
+- 🇮🇩 **Full Bahasa Indonesia** - Interface dan dokumentasi dalam bahasa Indonesia
 
-## Persyaratan
+## 📋 Persyaratan
 
-- PHP 7.3 atau lebih tinggi
-- MySQL/MariaDB
-- Ekstensi PHP: `mysqli`, `json`, `openssl`
-- Akun Fonnte (untuk mengirim pesan WhatsApp)
+| Persyaratan | Minimum | Direkomendasikan |
+|-------------|---------|------------------|
+| PHP | 7.3+ | 8.0+ |
+| MySQL/MariaDB | 5.7+ | 10.x+ |
+| Ekstensi PHP | mysqli, json, openssl | mysqli, json, openssl, mbstring |
 
-## Instalasi
+## 🚀 Instalasi
 
 ### 1. Clone Repository
 
@@ -28,117 +33,93 @@ cd login-link-via-whatsapp
 
 ### 2. Konfigurasi Database
 
-Buat database baru dan import file `dblink.sql`:
+Buat database baru dan import struktur tabel:
 
-```sql
+```bash
+# Login ke MySQL
+mysql -u root -p
+
+# Buat database
 CREATE DATABASE dblink;
+
+# Import struktur
 USE dblink;
--- Import tabel dari dblink.sql
+SOURCE dblink.sql;
 ```
 
 ### 3. Konfigurasi Environment
 
-Salin file `.env.example` ke `.env` dan edit sesuai konfigurasi Anda:
+Salin file `.env.example` ke `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit file `.env` dengan konfigurasi yang benar:
+Edit file `.env` dengan konfigurasi Anda:
 
 ```env
-# Database Configuration
+# ===== Database Configuration =====
 DB_HOST=localhost
 DB_USER=root
-DB_PASSWORD=your_password
+DB_PASSWORD=password_anda
 DB_NAME=dblink
 
-# Fonnte WhatsApp API
-FONNTE_TOKEN=your_fonnte_api_token
+# ===== Fonnte WhatsApp API =====
+# Dapatkan token di https://fonnte.com/
+FONNTE_TOKEN=your_fonnte_api_token_here
 
-# Application URL
-APP_URL=https://yourdomain.com
+# ===== Application Settings =====
+APP_URL=https://domain-anda.com
+APP_ENV=development
 SESSION_LIFETIME=3600
 ```
 
-### 4. Struktur Database
+### 4. Konfigurasi WhatsApp (Fonnte)
 
-Pastikan tabel berikut sudah dibuat:
+1. Daftar di [Fonnte](https://fonnte.com/)
+2. Dapatkan API Token dari dashboard
+3. Masukkan token di file `.env`
 
-```sql
-CREATE TABLE user (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    whatsapp VARCHAR(20) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+## 📖 Cara Penggunaan
 
-CREATE TABLE login_token (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    token VARCHAR(64) NOT NULL,
-    used TINYINT DEFAULT 0,
-    expired_at DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-);
-```
-
-### 5. Install Dependencies
-
-Tidak ada dependencies eksternal yang diperlukan. Hanya menggunakan library PHP standar.
-
-## Penggunaan
-
-### 1. Akses Halaman Login
+### Langkah 1: Akses Halaman Login
 
 Buka `login.php` di browser Anda.
 
-### 2. Masukkan Nomor WhatsApp
+```
+https://domain-anda.com/login.php
+```
 
-Masukkan nomor WhatsApp yang sudah terdaftar.
+### Langkah 2: Masukkan Nomor WhatsApp
 
-### 3. Klik "Kirim Link Login ke WhatsApp"
+Masukkan nomor WhatsApp yang sudah terdaftar di sistem.
+
+### Langkah 3: Klik Kirim Link Login
 
 Link login akan dikirim ke nomor WhatsApp Anda.
 
-### 4. Klik Link Login
+### Langkah 4: Klik Link Login
 
-Buka WhatsApp dan klik link login yang dikirim. Anda akan otomatis login.
+Buka WhatsApp dan klik link login yang dikirim. Anda akan otomatis masuk ke sistem!
 
-## Struktur File
+## 📁 Struktur File
 
 ```
-├── login.php              # Halaman login
-├── login_verify.php       # Verifikasi token dan set session
-├── send_login_link.php    # Endpoint mengirim link login
-├── session_validation.php # Helper untuk validasi session
-├── koneksi.php            # Koneksi database
-├── env.php                # Loader variabel environment
-├── dblink.sql             # Struktur database
-├── .env.example           # Contoh konfigurasi environment
-└── README.md              # Dokumentasi
+login-link-via-whatsapp/
+├── 📄 login.php              # Halaman login utama
+├── 📄 login_verify.php       # Verifikasi token & set session
+├── 📄 send_login_link.php    # Endpoint API mengirim link
+├── 📄 session_validation.php # Helper validasi session
+├── 📄 koneksi.php            # Koneksi database
+├── 📄 env.php                # Loader environment variables
+├── 📄 dblink.sql             # Struktur database
+├── 📄 .env.example           # Contoh konfigurasi
+└── 📄 README.md              # Dokumentasi ini
 ```
 
-## Keamanan
+## 🔌 API Reference
 
-### Implementasi Keamanan
-
-1. **Prepared Statements** - Mencegah SQL Injection
-2. **Token Aman** - Menggunakan `random_bytes(32)` untuk generate token
-3. **Session Security** - HttpOnly, Secure, SameSite=Strict cookies
-4. **Session Regeneration** - Mencegah session fixation attack
-5. **Input Validation** - Validasi format nomor WhatsApp dan token
-6. **Generic Error Messages** - Tidak expose informasi sensitif
-
-### Rekomendasi Keamanan
-
-- Gunakan HTTPS untuk production
--定期 rotate `FONNTE_TOKEN`
-- Monitor log untuk aktivitas mencurigakan
-- Set `SESSION_LIFETIME` sesuai kebutuhan (default: 1 jam)
-
-## API Reference
-
-### Send Login Link Endpoint
+### Endpoint: Kirim Link Login
 
 ```http
 POST /send_login_link.php
@@ -157,7 +138,7 @@ Content-Type: application/json
 }
 ```
 
-**Response Gagal:**
+**Response Error:**
 ```json
 {
     "success": false,
@@ -165,31 +146,65 @@ Content-Type: application/json
 }
 ```
 
-## Troubleshooting
+## 🔒 Keamanan
+
+Sistem ini mengimplementasikan berbagai fitur keamanan:
+
+| Fitur | Deskripsi |
+|-------|-----------|
+| **Prepared Statements** | Mencegah SQL Injection |
+| **Secure Token** | Menggunakan `random_bytes(32)` |
+| **Session Security** | HttpOnly, Secure, SameSite=Strict |
+| **Session Regeneration** | Mencegah session fixation |
+| **Input Validation** | Validasi format input |
+| **Generic Errors** | Tidak expose informasi sensitif |
+| **Timeout Token** | Token expired dalam 5 menit |
+
+### Rekomendasi Keamanan
+
+1. **Selalu gunakan HTTPS** di production
+2. **定期 rotate** `FONNTE_TOKEN` setiap bulan
+3. **Monitor log** untuk aktivitas mencurigakan
+4. **Atur `SESSION_LIFETIME`** sesuai kebutuhan (default: 1 jam)
+5. **Validasi IP** untuk lingkungan dengan IP statis
+
+## 🛠️ Troubleshooting
 
 ### Token Tidak Valid
-
-Pastikan:
-- Token belum digunakan sebelumnya
-- Token belum kedaluwarsa (5 menit)
-- URL diakses dari browser yang sama
+- Pastikan token belum digunakan sebelumnya
+- Pastikan token belum kedaluwarsa (5 menit)
+- Buka URL dari browser yang sama
 
 ### WhatsApp Tidak Terkirim
+- Cek `FONNTE_TOKEN` di `.env`
+- Pastikan nomor WhatsApp sudah terdaftar
+- Cek format nomor (62xx bukan 0xx)
 
-Cek:
-- `FONNTE_TOKEN` sudah benar di `.env`
-- Nomor WhatsApp sudah terdaftar di database
-- Format nomor WhatsApp benar (62xx而非0xx)
+### Database Connection Error
+- Cek kredensial database di `.env`
+- Pastikan MySQL service sedang berjalan
+- Cek user database memiliki akses
 
-## Lisensi
+## 📝 Lisensi
 
-MIT License
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
-## Kontribusi
+## 🤝 Kontribusi
 
-Pull requests are welcome! Untuk perubahan besar, buka issue terlebih dahulu.
+Kontribusi selalu diterima! Silakan:
 
-## Credits
+1. Fork repository ini
+2. Buat branch baru (`git checkout -b feature/AmazingFeature`)
+3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. Push ke branch (`git push origin feature/AmazingFeature`)
+5. Buat Pull Request
 
-- [Fonnte](https://fonnte.com/) - WhatsApp API Provider
+## 📧 Kontak
+
+- **GitHub:** [@qtonnnn](https://github.com/qtonnnn)
+- **Email:** qtonnnn@example.com
+
+---
+
+Dibuat dengan ❤️ untuk komunitas Indonesia
 
