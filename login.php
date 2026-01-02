@@ -294,9 +294,6 @@ include("koneksi.php");
             
             <div class="success-message" id="successMessage">Login berhasil! Mengalihkan...</div>
             
-            <div class="register-link">
-                Belum punya akun? <a href="#">Daftar sekarang</a>
-            </div>
         </form>
         
         <div class="footer">
@@ -438,11 +435,6 @@ include("koneksi.php");
                 }, 1500);
             }
             
-            // Event listener untuk link register
-            document.querySelector('.register-link a').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('Halaman pendaftaran akan dibuka.\n\nIni hanya simulasi untuk demo.');
-            });
             
             // Event listener untuk Kirim Link Login ke WhatsApp
             sendLinkBtn.addEventListener('click', () => {
